@@ -5,8 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException; 
 
-import daouser.Users;
-import daouser.UsersDao;
+import daouser.User;
 
 
 public class MySqlUsersDao implements UsersDao {
@@ -14,7 +13,7 @@ public class MySqlUsersDao implements UsersDao {
 
 	
 	@Override  
-	public Users read(String name, String pass) throws SQLException {  
+	public User read(String name, String pass) throws SQLException {  
 		String sql = "SELECT idusers, name, password FROM users where name=? and password=?";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setString(1, name);
@@ -22,40 +21,46 @@ public class MySqlUsersDao implements UsersDao {
         ResultSet rs = statement.executeQuery();
         rs.next();
         
-        Users us = new Users();  
+        User us = new User();  
         us.setName(rs.getString("name"));   
         return us; 
 	} 
 	
 	@Override  
-	public Users getAll() throws SQLException {  
+	public ResultSet getAll() throws SQLException {  
 		String sql = "SELECT idusers, name, password FROM users";
 		PreparedStatement statement = connection.prepareStatement(sql);
-        ResultSet rs = statement.executeQuery();
+		ResultSet rs = statement.executeQuery();
 		
-        Users us = new Users();  
-        us.setResult(rs);   
-        return us; 
+        return rs;
+      
 	} 
 	
 	@Override
 	public void update(String id, String name, String pass) throws SQLException {
-		String sql = "UPDATE users SET name='"+name+"', password='"+pass+"'  where idusers='"+id+"'";
+		String sql = "UPDATE users SET name=?, password=? where idusers=?";
 		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, name);
+        statement.setString(2, pass);
+        statement.setString(3, id);
         statement.executeUpdate();
 	}
 
 	@Override
 	public void delete(String id) throws SQLException {
-		String sql = "DELETE from users where idusers='"+id+"'";
+		String sql = "DELETE from users where idusers=?";
 		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, id);
         statement.executeUpdate();
 	}
 	
 	@Override  
 	public void create(String name, String pass) throws SQLException { 
-		String sql = "INSERT INTO users (name, password) VALUES ('"+name+"', '"+pass+"')";
+		//String sql = "INSERT INTO users (name, password) VALUES (name=?, password=?)";
+		String sql = "INSERT INTO users SET name=?, password=?";
 		PreparedStatement statement = connection.prepareStatement(sql);
+		 statement.setString(1, name);
+		 statement.setString(2, pass);
         statement.executeUpdate();
 	} 
 

@@ -1,12 +1,12 @@
 package user;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.table.AbstractTableModel;
 
 import dao.*;
-import daouser.Users;
 import form.ClassFrame;
 
 import com.mysql.jdbc.Connection;
@@ -19,10 +19,14 @@ public class UserTableModel extends AbstractTableModel implements Runnable{
 	private ArrayList<String []> dataArrayList;
 	
 	private final ClassFrame frameapp;
+	private DaoFactory daoFactory;
+	private Connection con;
 	
-	public UserTableModel(ClassFrame frameapp) {
+	public UserTableModel(ClassFrame frameapp, DaoFactory daoFactory) {
 		
 		this.frameapp = frameapp;
+		
+		this.daoFactory = daoFactory;
 		
 		new Thread(this).start();
 		
@@ -34,27 +38,25 @@ public class UserTableModel extends AbstractTableModel implements Runnable{
     	
 		try {	
 		
-			Connection con;
-			DaoFactory daoFactory = new MySqlDaoFactory();
 			con = (Connection) daoFactory.getConnection();
 			
 			MySqlUsersDao GetRes = new MySqlUsersDao(con);
-			Users result = GetRes.getAll();
+			ResultSet result = GetRes.getAll();
 			
 	    	dataArrayList = new ArrayList<String []>();
     	
-	    	while(result.rs.next()){
+	    	while(result.next()){
 	    		
 	    		String[] str = new String[columnCount];
 	    		
-	    		str[0] = result.rs.getString("idusers");
-	    		str[1] = result.rs.getString("name");
-	    		str[2] = result.rs.getString("password");
+	    		str[0] = result.getString("idusers");
+	    		str[1] = result.getString("name");
+	    		str[2] = result.getString("password");
 	
 	    		addDate(str);
 	    	}
     	
-    	result.rs.close();
+    	result.close();
     	
 		} catch (SQLException e) {		
 			

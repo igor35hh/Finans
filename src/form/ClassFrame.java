@@ -30,10 +30,13 @@ public class ClassFrame extends Applet {
 
 	private static final long serialVersionUID = 1L;
 	
+	Connection con;
+	DaoFactory daoFactory = new MySqlDaoFactory();
+	
 	JTabbedPane tabbedPane = new JTabbedPane();
 	
 	//user
-	TableModel userdataModel = new UserTableModel(this);
+	TableModel userdataModel = new UserTableModel(this,daoFactory);
     JTable usertable = new JTable(userdataModel);
     JScrollPane userscrollpane = new JScrollPane(usertable); 
     
@@ -41,6 +44,7 @@ public class ClassFrame extends Applet {
     TableModel customerdataModel = new CustomerTableModel();
     JTable customertable = new JTable(customerdataModel);
     JScrollPane customerscrollpane = new JScrollPane(customertable);
+    
     
     
 	public void init(){
@@ -113,8 +117,6 @@ public class ClassFrame extends Applet {
 	        	
 	        	try {
 
-	        		Connection con;
-					DaoFactory daoFactory = new MySqlDaoFactory();
 					con = (Connection) daoFactory.getConnection();
 					
 					MySqlUsersDao GetRes = new MySqlUsersDao(con);
@@ -162,8 +164,6 @@ public class ClassFrame extends Applet {
 							
 							try {
 								
-								Connection con;
-								DaoFactory daoFactory = new MySqlDaoFactory();
 								con = (Connection) daoFactory.getConnection();
 								
 								MySqlUsersDao GetRes = new MySqlUsersDao(con);
@@ -234,8 +234,6 @@ public class ClassFrame extends Applet {
 						
 						try {
 							
-							Connection con;
-							DaoFactory daoFactory = new MySqlDaoFactory();
 							con = (Connection) daoFactory.getConnection();
 							
 							MySqlUsersDao GetRes = new MySqlUsersDao(con);

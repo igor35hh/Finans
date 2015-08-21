@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager; 
 import java.sql.SQLException;
 
-import daouser.UsersDao;
-
 public class MySqlDaoFactory implements DaoFactory {   
 	
 	private String user = "root";//Логин пользователя  
@@ -30,7 +28,8 @@ public class MySqlDaoFactory implements DaoFactory {
 	
 	@Override  
 	public UsersDao getUsersDao(Connection connection) {  
-		return null;  
+		//return null;
+		return (UsersDao) instance; 
 	}   
 	
 	public MySqlDaoFactory() {  

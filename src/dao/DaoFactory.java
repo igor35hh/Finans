@@ -3,8 +3,6 @@ package dao;
 import java.sql.Connection; 
 import java.sql.SQLException;  
 
-import daouser.UsersDao;
-
 /** Фабрика объектов для работы с базой данных */ 
 public interface DaoFactory {   
 	/** Возвращает подключение к базе данных */  
