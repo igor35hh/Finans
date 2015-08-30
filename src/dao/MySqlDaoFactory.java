@@ -6,10 +6,10 @@ import java.sql.SQLException;
 
 public class MySqlDaoFactory implements DaoFactory {   
 	
-	private String user = "root";//Логин пользователя  
-	private String password = "mysql";//Пароль пользователя  
-	private String url = "jdbc:mysql://localhost:3306/mybank";//URL адрес  
-	private String driver = "com.mysql.jdbc.Driver";//Имя драйвера
+	private String user = "root";//login user  
+	private String password = "mysql";//password user  
+	private String url = "jdbc:mysql://localhost:3306/mybank";//URL address  
+	private String driver = "com.mysql.jdbc.Driver";//Driver name
 	private static volatile Connection instance;
 	
 	
@@ -34,7 +34,7 @@ public class MySqlDaoFactory implements DaoFactory {
 	
 	public MySqlDaoFactory() {  
 		try {  Class.forName(driver);
-		//Регистрируем драйвер  
+		//Registration driver  
 		} catch (ClassNotFoundException e) {  e.printStackTrace();  }  
 	}
 	

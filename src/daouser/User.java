@@ -1,7 +1,5 @@
 package daouser;
 
-import java.sql.ResultSet;
-
 public class User {
 	
 	private String id;
@@ -21,10 +19,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-    
-    public ResultSet getResult(ResultSet rs) {
-        return rs;
     }
 
 }
