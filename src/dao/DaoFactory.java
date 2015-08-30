@@ -3,12 +3,12 @@ package dao;
 import java.sql.Connection; 
 import java.sql.SQLException;  
 
-/** Fabric object for work with data base */ 
+/** Фабрика объектов для работы с базой данных */ 
 public interface DaoFactory {   
-	/** Return connect to the database */  
+	/** Возвращает подключение к базе данных */  
 	public Connection getConnection() throws SQLException;  
 	
-	/** Return object for manage persistent state of the object User */  
+	/** Возвращает объект для управления персистентным состоянием объекта Student */  
 	public UsersDao getUsersDao(Connection connection);
 	
 } 

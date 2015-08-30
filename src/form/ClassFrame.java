@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.applet.*;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,6 +17,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableModel;
 
+import com.mysql.jdbc.Connection;
+
 import customer.*;
 import dao.DaoFactory;
 import dao.MySqlDaoFactory;
@@ -27,7 +30,7 @@ public class ClassFrame extends Applet {
 
 	private static final long serialVersionUID = 1L;
 	
-	//Connection con;
+	Connection con;
 	DaoFactory daoFactory = new MySqlDaoFactory();
 	
 	JTabbedPane tabbedPane = new JTabbedPane();
@@ -113,11 +116,13 @@ public class ClassFrame extends Applet {
 	        	final String id = (String) usertable.getValueAt(sel,0);
 	        	
 	        	try {
+
+					con = (Connection) daoFactory.getConnection();
 					
-					MySqlUsersDao GetRes = new MySqlUsersDao(daoFactory);
+					MySqlUsersDao GetRes = new MySqlUsersDao(con);
 					GetRes.delete(id);
 	        		
-                } catch (Exception e1) {
+                } catch (SQLException e1) {
                 	e1.printStackTrace();
                 }
 
@@ -159,12 +164,14 @@ public class ClassFrame extends Applet {
 							
 							try {
 								
-								MySqlUsersDao GetRes = new MySqlUsersDao(daoFactory);
+								con = (Connection) daoFactory.getConnection();
+								
+								MySqlUsersDao GetRes = new MySqlUsersDao(con);
 								GetRes.update(id,uname.getText(),upass.getText());
 								
 								jf.setVisible(false);
 								
-								} catch (Exception e1) {		
+								} catch (SQLException e1) {		
 								
 								e1.printStackTrace();
 								} 
@@ -227,12 +234,14 @@ public class ClassFrame extends Applet {
 						
 						try {
 							
-							MySqlUsersDao GetRes = new MySqlUsersDao(daoFactory);
+							con = (Connection) daoFactory.getConnection();
+							
+							MySqlUsersDao GetRes = new MySqlUsersDao(con);
 							GetRes.create(uname.getText(),upass.getText());
 							
 							jf.setVisible(false);
 							
-							} catch (Exception e1) {		
+							} catch (SQLException e1) {		
 							
 							e1.printStackTrace();
 							} 
